@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "team_id": 1,
+        "board_name": "Sprint Board",
+        "tasks": [
+            {
+                "id": 1,
+                "title": "Create Login API",
+                "status": "completed"
+            }
+        ]
+    }
+]
