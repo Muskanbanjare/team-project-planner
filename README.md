@@ -1,5 +1,3 @@
-Ye updated professional README.md hai — isko pura copy karke apni `README.md` file me paste kar do.
-
 # Team Project Planner API
 
 ## About the Project
