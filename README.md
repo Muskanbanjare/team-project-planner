@@ -1,136 +1,240 @@
 # Team Project Planner API
 
 ## About the Project
-This is a backend project built using Django for managing a simple team project planning system.  
-It allows creation and management of users, teams, boards, and tasks using REST APIs.
 
-Instead of using a database, I have used local JSON files for data storage. This helps in keeping the system simple and easy to understand while focusing on backend logic and API design.
+This is a backend project built using Django for managing a simple team project planning system.
 
-The main goal of this project is to build clean, modular, and scalable APIs with proper validation, error handling, and file-based persistence.
+The application allows management of users, teams, boards, and tasks through REST APIs.
+
+Instead of using a database, local JSON files are used for persistence. This keeps the application lightweight and focuses mainly on backend logic, modular architecture, validation, and API implementation.
+
+The project is designed with clean code structure, proper error handling, and scalable architecture.
 
 ---
 
 ## Features
 
-- User management (create, get, delete users)
-- Team management (create teams, add users to teams)
-- Board management (create boards under teams)
-- Task management (create and manage tasks)
-- Task status update (todo → in_progress → done)
-- File-based data persistence using JSON files
-- Proper validation and error handling in all APIs
+* User Management
+
+  * Create user
+  * Get users
+  * Delete user
+
+* Team Management
+
+  * Create team
+  * Add users to teams
+  * Get teams
+
+* Board Management
+
+  * Create boards under teams
+  * Get boards
+
+* Task Management
+
+  * Create tasks
+  * Assign tasks to users
+  * Update task status
+  * Get tasks
+
+* File-based persistence using JSON files
+
+* Proper validation and exception handling
+
+* Modular project structure
 
 ---
 
 ## Tech Stack
 
-- Python
-- Django
-- JSON file storage (no database)
-- Django HTTP request handling
+* Python
+* Django
+* JSON File Storage
+* REST APIs
 
 ---
 
 ## Project Architecture
 
-The project follows a modular structure:
+The project follows a modular layered architecture:
 
-views → API layer → file storage (db folder)
+views → services → storage layer
 
-- views.py → Handles HTTP requests
-- API layer → Contains business logic (user, team, board, task)
-- storage layer → Handles JSON file read/write operations
+* views.py → Handles API requests and responses
+* services → Contains business logic
+* storage layer → Handles JSON file read/write operations
 
 ---
+
+
+
+
+## Project Structure
+
+project/
+│── api/
+│   │── views.py
+│   │── urls.py
+│   │── services/
+│   │── storage/
+│
+│── db/
+│   │── users.json
+│   │── teams.json
+│   │── boards.json
+│   │── tasks.json
+│
+│── manage.py
+│── requirements.txt
+│── README.md
+
+---
+
+
+
+
 
 ## Modules
 
 ### User Module
-- Create user
-- Get all users
-- Delete user
+
+* Create user
+* Get all users
+* Delete user
 
 ### Team Module
-- Create team
-- Get teams
-- Add user to team
+
+* Create team
+* Add users to team
+* Get teams
 
 ### Board Module
-- Create board linked to team
-- Get boards
+
+* Create board linked to a team
+* Get boards
 
 ### Task Module
-- Create task linked to board and user
-- Get tasks
-- Update task status
+
+* Create task linked to board and user
+* Get tasks
+* Update task status
 
 ---
 
 ## Data Storage
 
-All data is stored in the `db/` folder as JSON files:
+All application data is stored locally inside the `db/` folder using JSON files.
 
-- users.json
-- teams.json
-- boards.json
-- tasks.json
+Files used:
 
-No external database is used in this project.
+* users.json
+* teams.json
+* boards.json
+* tasks.json
+
+No external database is used.
+
+---
+
+## Sample APIs
+
+### Create User
+
+POST /api/users/create/
+
+### Create Team
+
+POST /api/teams/create/
+
+### Create Board
+
+POST /api/boards/create/
+
+### Create Task
+
+POST /api/tasks/create/
+
+### Update Task Status
+
+PUT /api/tasks/update-status/
 
 ---
 
 ## API Flow
 
-1. Create Users  
-2. Create Teams  
-3. Add Users to Teams  
-4. Create Boards  
-5. Create Tasks  
-6. Update Task Status  
+1. Create Users
+2. Create Teams
+3. Add Users to Teams
+4. Create Boards
+5. Create Tasks
+6. Update Task Status
 
 ---
 
 ## Error Handling
 
 The application handles:
-- Missing required fields
-- Invalid IDs
-- Duplicate entries
-- Non-existing resources
 
-All errors are returned in JSON format.
+* Missing required fields
+* Invalid IDs
+* Duplicate entries
+* Invalid task status
+* Non-existing resources
+
+All errors are returned in JSON format with proper messages.
+
+---
+
+## Design Choice
+
+I used JSON file storage instead of a database because the assignment mainly focused on backend logic and local persistence.
+
+This approach keeps the project lightweight, easy to test, and independent from database configuration while still maintaining structured data handling.
 
 ---
 
 ## How to Run
 
-1. Install dependencies:
-
+### 1. Install Dependencies
 
 pip install -r requirements.txt
 
-
-2. Run server:
+### 2. Run Server
 
 python manage.py runserver
 
+### 3. Open APIs
 
-3. Open APIs in browser or Postman:
+[http://127.0.0.1:8000/api/](http://127.0.0.1:8000/api/)
 
-http://127.0.0.1:8000/api/
-
+Use Postman or browser to test the APIs.
 
 ---
 
 ## Assumptions
 
-- IDs are auto-generated
-- Each team can have multiple users
-- Each task belongs to one board and one user
-- Data is stored locally using JSON files
+* IDs are auto-generated
+* Each team can contain multiple users
+* Each task belongs to one board
+* Each task is assigned to one user
+* Data is persisted locally using JSON files
+
+---
+
+## Future Improvements
+
+* Authentication & Authorization
+* Task priority and deadlines
+* Pagination and filtering
+* Unit testing
+* Docker support
+* Database integration (PostgreSQL/MySQL)
 
 ---
 
 ## Conclusion
 
-This project helped me understand backend API development, modular architecture, and f
+This project helped me understand backend API development, modular architecture, validation handling, file-based persistence, and clean code organization using Django.
+
+The focus was on building scalable and maintainable APIs while keeping the implementation simple and efficient.
