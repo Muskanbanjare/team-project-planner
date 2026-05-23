@@ -3,5 +3,45 @@
         "id": 1,
         "name": "pallu",
         "email": "pallu@gmail.com"
+    },
+    {
+        "id": 2,
+        "name": "nitesh",
+        "email": "nitesh@gmail.com"
+    },
+    {
+        "id": 3,
+        "name": "abc",
+        "email": "abc@gmail.com"
+    },
+    {
+        "id": 5,
+        "name": "ram",
+        "email": "ram@gmail.com"
+    },
+    {
+        "id": 6,
+        "name": "Rahul",
+        "email": "rahul@gmail.com"
+    },
+    {
+        "id": 7,
+        "name": "Sneha",
+        "email": "sneha@gmail.com"
+    },
+    {
+        "id": 8,
+        "name": "jiya",
+        "email": "jiya@gmail.com"
+    },
+    {
+        "id": 9,
+        "name": "pallvee",
+        "email": "pallvee@gmail.com"
+    },
+    {
+        "id": 10,
+        "name": "Muskan Banjare",
+        "email": "muskanbanjare@gmail.com"
     }
 ]

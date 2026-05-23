@@ -4,6 +4,7 @@ from core.storage.file_handler import read_data, write_data
 
 class TaskAPI:
 
+    # CREATE TASK
     def create_task(self, request):
         try:
             data = json.loads(request)
@@ -16,12 +17,20 @@ class TaskAPI:
             tasks = read_data("tasks.json")
 
             # validate board
-            board = next((b for b in boards if b["id"] == data.get("board_id")), None)
+            board = next(
+                (b for b in boards if b["id"] == data.get("board_id")),
+                None
+            )
+
             if not board:
                 raise Exception("Board not found")
 
             # validate user
-            user = next((u for u in users if u["id"] == data.get("assigned_to")), None)
+            user = next(
+                (u for u in users if u["id"] == data.get("assigned_to")),
+                None
+            )
+
             if not user:
                 raise Exception("User not found")
 
@@ -34,6 +43,7 @@ class TaskAPI:
             }
 
             tasks.append(new_task)
+
             write_data("tasks.json", tasks)
 
             return json.dumps({
@@ -44,22 +54,29 @@ class TaskAPI:
         except Exception as e:
             return json.dumps({"error": str(e)})
 
-
+    # GET TASKS
     def get_tasks(self):
         try:
-            return json.dumps({"tasks": read_data("tasks.json")})
+            return json.dumps({
+                "tasks": read_data("tasks.json")
+            })
+
         except Exception as e:
             return json.dumps({"error": str(e)})
 
-
-    # ⭐ IMPORTANT: STATUS UPDATE (REQUIRED IN REQUIREMENT)
+    # UPDATE TASK STATUS
     def update_task_status(self, request):
+
         try:
             data = json.loads(request)
 
             tasks = read_data("tasks.json")
 
-            task = next((t for t in tasks if t["id"] == data.get("task_id")), None)
+            task = next(
+                (t for t in tasks if t["id"] == data.get("task_id")),
+                None
+            )
+
             if not task:
                 raise Exception("Task not found")
 
@@ -75,6 +92,93 @@ class TaskAPI:
             return json.dumps({
                 "message": "Task status updated",
                 "task": task
+            })
+
+        except Exception as e:
+            return json.dumps({"error": str(e)})
+
+    # UPDATE TASK
+    def update_task(self, task_id, request):
+
+        try:
+            data = json.loads(request)
+
+            tasks = read_data("tasks.json")
+            boards = read_data("boards.json")
+            users = read_data("users.json")
+
+            task = next(
+                (t for t in tasks if t["id"] == task_id),
+                None
+            )
+
+            if not task:
+                raise Exception("Task not found")
+
+            # update title
+            if "title" in data:
+                task["title"] = data["title"]
+
+            # update board
+            if "board_id" in data:
+
+                board = next(
+                    (b for b in boards if b["id"] == data["board_id"]),
+                    None
+                )
+
+                if not board:
+                    raise Exception("Board not found")
+
+                task["board_id"] = data["board_id"]
+
+            # update assigned user
+            if "assigned_to" in data:
+
+                user = next(
+                    (u for u in users if u["id"] == data["assigned_to"]),
+                    None
+                )
+
+                if not user:
+                    raise Exception("User not found")
+
+                task["assigned_to"] = data["assigned_to"]
+
+            write_data("tasks.json", tasks)
+
+            return json.dumps({
+                "message": "Task updated successfully",
+                "task": task
+            })
+
+        except Exception as e:
+            return json.dumps({"error": str(e)})
+
+    # DELETE TASK
+    def delete_task(self, task_id):
+
+        try:
+
+            tasks = read_data("tasks.json")
+
+            task = next(
+                (t for t in tasks if t["id"] == task_id),
+                None
+            )
+
+            if not task:
+                raise Exception("Task not found")
+
+            tasks = [
+                t for t in tasks
+                if t["id"] != task_id
+            ]
+
+            write_data("tasks.json", tasks)
+
+            return json.dumps({
+                "message": "Task deleted successfully"
             })
 
         except Exception as e:

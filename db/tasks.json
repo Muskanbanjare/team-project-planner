@@ -5,5 +5,26 @@
         "team_id": 1,
         "assigned_to": 1,
         "status": "todo"
+    },
+    {
+        "id": 2,
+        "title": "Create Django APIs",
+        "board_id": 1,
+        "assigned_to": 1,
+        "status": "todo"
+    },
+    {
+        "id": 3,
+        "title": "Design database logic (file storage)",
+        "board_id": 1,
+        "assigned_to": 2,
+        "status": "todo"
+    },
+    {
+        "id": 4,
+        "title": "Build React UI",
+        "board_id": 2,
+        "assigned_to": 3,
+        "status": "todo"
     }
 ]

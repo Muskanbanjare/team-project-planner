@@ -5,7 +5,9 @@ from core.utils.validators import validate_user_data
 
 class UserAPI:
 
+    # CREATE USER
     def create_user(self, request):
+
         try:
             data = json.loads(request)
 
@@ -25,6 +27,7 @@ class UserAPI:
             }
 
             users.append(new_user)
+
             write_data("users.json", users)
 
             return json.dumps({
@@ -35,16 +38,64 @@ class UserAPI:
         except Exception as e:
             return json.dumps({"error": str(e)})
 
-
+    # GET USERS
     def get_users(self):
+
         try:
             users = read_data("users.json")
-            return json.dumps({"users": users})
+
+            return json.dumps({
+                "users": users
+            })
+
         except Exception as e:
             return json.dumps({"error": str(e)})
 
+    # UPDATE USER
+    def update_user(self, user_id, request):
 
+        try:
+            data = json.loads(request)
+
+            users = read_data("users.json")
+
+            user = next(
+                (u for u in users if u["id"] == user_id),
+                None
+            )
+
+            if not user:
+                raise Exception("User not found")
+
+            # update name
+            if "name" in data:
+                user["name"] = data["name"]
+
+            # update email
+            if "email" in data:
+
+                for u in users:
+                    if (
+                        u["email"] == data["email"]
+                        and u["id"] != user_id
+                    ):
+                        raise Exception("Email already exists")
+
+                user["email"] = data["email"]
+
+            write_data("users.json", users)
+
+            return json.dumps({
+                "message": "User updated successfully",
+                "user": user
+            })
+
+        except Exception as e:
+            return json.dumps({"error": str(e)})
+
+    # DELETE USER
     def delete_user(self, user_id):
+
         try:
             users = read_data("users.json")
 
@@ -52,9 +103,11 @@ class UserAPI:
             found = False
 
             for u in users:
+
                 if u["id"] == user_id:
                     found = True
                     continue
+
                 updated.append(u)
 
             if not found:
@@ -62,7 +115,9 @@ class UserAPI:
 
             write_data("users.json", updated)
 
-            return json.dumps({"message": "User deleted successfully"})
+            return json.dumps({
+                "message": "User deleted successfully"
+            })
 
         except Exception as e:
             return json.dumps({"error": str(e)})
